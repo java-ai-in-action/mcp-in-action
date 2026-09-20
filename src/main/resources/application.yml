@@ -1,0 +1,35 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: mcp-in-action
+  ai:
+    mcp:
+      server:
+        name: order-mcp-server
+        version: 1.0.0
+        # 生产推荐 STREAMABLE_HTTP；本地进程间通信用 STDIO
+        protocol: STREAMABLE_HTTP
+        # 端点默认 /mcp，由 mcp-server-webmvc starter 暴露
+    openai:
+      api-key: ${OPENAI_API_KEY:sk-demo}
+      chat:
+        options:
+          model: ${CHAT_MODEL:gpt-4o-mini}
+
+# 安全三件套配置
+app:
+  mcp:
+    rate-limit:
+      permits-per-minute: 60      # 每用户每分钟最多 60 次工具调用
+    audit:
+      enabled: true
+    security:
+      # 危险工具白名单（默认空 = 全部拒绝高危工具）
+      allow-dangerous-tools: false
+
+logging:
+  level:
+    org.springframework.ai.mcp: INFO
+    com.javaai.mcp: DEBUG
