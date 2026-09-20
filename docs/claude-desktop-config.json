@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "order-server": {
+      "url": "http://localhost:8080/mcp"
+    }
+  }
+}
